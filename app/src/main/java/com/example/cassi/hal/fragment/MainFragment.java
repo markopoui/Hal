@@ -12,7 +12,7 @@
  * the License.
  */
 
-package com.example.cassi.hal.activity;
+package com.example.cassi.hal.fragment;
 
 import java.net.URI;
 import java.util.Collections;
@@ -51,6 +51,11 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.cassi.hal.R;
+import com.example.cassi.hal.activity.BrowseErrorActivity;
+import com.example.cassi.hal.adapter.CardPresenter;
+import com.example.cassi.hal.activity.DetailsActivity;
+import com.example.cassi.hal.model.Movie;
+import com.example.cassi.hal.utils.MovieList;
 
 public class MainFragment extends BrowseFragment {
     private static final String TAG = "MainFragment";

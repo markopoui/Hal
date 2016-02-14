@@ -12,7 +12,7 @@
  * the License.
  */
 
-package com.example.cassi.hal.activity;
+package com.example.cassi.hal.model;
 
 import android.util.Log;
 

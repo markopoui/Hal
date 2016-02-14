@@ -12,9 +12,11 @@
  * the License.
  */
 
-package com.example.cassi.hal.activity;
+package com.example.cassi.hal.adapter;
 
 import android.support.v17.leanback.widget.AbstractDetailsDescriptionPresenter;
+
+import com.example.cassi.hal.model.Movie;
 
 public class DetailsDescriptionPresenter extends AbstractDetailsDescriptionPresenter {
 

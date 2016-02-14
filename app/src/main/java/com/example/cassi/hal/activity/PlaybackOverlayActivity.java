@@ -29,6 +29,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.cassi.hal.R;
+import com.example.cassi.hal.fragment.PlaybackOverlayFragment;
+import com.example.cassi.hal.model.Movie;
 
 /**
  * PlaybackOverlayActivity for video playback that loads PlaybackOverlayFragment

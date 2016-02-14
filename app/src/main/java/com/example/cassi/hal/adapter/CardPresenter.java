@@ -12,7 +12,7 @@
  * the License.
  */
 
-package com.example.cassi.hal.activity;
+package com.example.cassi.hal.adapter;
 
 import android.graphics.drawable.Drawable;
 import android.support.v17.leanback.widget.ImageCardView;
@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.example.cassi.hal.R;
+import com.example.cassi.hal.model.Movie;
 
 /*
  * A CardPresenter is used to generate Views and bind Objects to them on demand. 

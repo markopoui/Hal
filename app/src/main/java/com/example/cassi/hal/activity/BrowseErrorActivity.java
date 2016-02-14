@@ -25,6 +25,7 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import com.example.cassi.hal.R;
+import com.example.cassi.hal.fragment.ErrorFragment;
 
 /*
  * BrowseErrorActivity shows how to use ErrorFragment

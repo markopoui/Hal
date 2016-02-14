@@ -12,7 +12,7 @@
  * the License.
  */
 
-package com.example.cassi.hal.activity;
+package com.example.cassi.hal.fragment;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -43,6 +43,14 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.cassi.hal.R;
+import com.example.cassi.hal.adapter.CardPresenter;
+import com.example.cassi.hal.activity.DetailsActivity;
+import com.example.cassi.hal.adapter.DetailsDescriptionPresenter;
+import com.example.cassi.hal.activity.MainActivity;
+import com.example.cassi.hal.activity.PlaybackOverlayActivity;
+import com.example.cassi.hal.model.Movie;
+import com.example.cassi.hal.utils.MovieList;
+import com.example.cassi.hal.utils.Utils;
 
 import java.util.Collections;
 import java.util.List;
@@ -90,7 +98,7 @@ public class VideoDetailsFragment extends DetailsFragment {
             updateBackground(mSelectedMovie.getBackgroundImageUrl());
             setOnItemViewClickedListener(new ItemViewClickedListener());
         } else {
-            Intent intent = new Intent(getActivity(), Main2Activity.class);
+            Intent intent = new Intent(getActivity(), MainActivity.class);
             startActivity(intent);
         }
     }

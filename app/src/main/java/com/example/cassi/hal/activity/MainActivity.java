@@ -23,7 +23,7 @@ import com.example.cassi.hal.R;
 /*
  * MainActivity class that loads MainFragment
  */
-public class Main2Activity extends Activity {
+public class MainActivity extends Activity {
     /**
      * Called when the activity is first created.
      */

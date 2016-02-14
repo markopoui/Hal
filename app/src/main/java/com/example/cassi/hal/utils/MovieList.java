@@ -1,4 +1,6 @@
-package com.example.cassi.hal.activity;
+package com.example.cassi.hal.utils;
+
+import com.example.cassi.hal.model.Movie;
 
 import java.util.ArrayList;
 import java.util.List;
