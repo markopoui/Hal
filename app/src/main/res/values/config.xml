@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="t411_api_base_url">https://api.t411.in/</string>
+    <string name="my_t411_token">99591834:44:3d872d582fe2eeb49c0f13edf1141c15</string>
+</resources>

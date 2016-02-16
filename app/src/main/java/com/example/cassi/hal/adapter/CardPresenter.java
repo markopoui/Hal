@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.example.cassi.hal.R;
 import com.example.cassi.hal.model.Movie;
+import com.example.cassi.hal.model.TorrentItem;
 
 /*
  * A CardPresenter is used to generate Views and bind Objects to them on demand. 
@@ -69,20 +70,18 @@ public class CardPresenter extends Presenter {
 
     @Override
     public void onBindViewHolder(Presenter.ViewHolder viewHolder, Object item) {
-        Movie movie = (Movie) item;
+        TorrentItem torrentItem = (TorrentItem) item;
         ImageCardView cardView = (ImageCardView) viewHolder.view;
 
         Log.d(TAG, "onBindViewHolder");
-        if (movie.getCardImageUrl() != null) {
-            cardView.setTitleText(movie.getTitle());
-            cardView.setContentText(movie.getStudio());
-            cardView.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT);
-            Glide.with(viewHolder.view.getContext())
-                    .load(movie.getCardImageUrl())
-                    .centerCrop()
-                    .error(mDefaultCardImage)
-                    .into(cardView.getMainImageView());
-        }
+        cardView.setTitleText(torrentItem.getFixedTitle());
+        cardView.setContentText(torrentItem.getPubDate());
+        cardView.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT);
+//        Glide.with(viewHolder.view.getContext())
+//                .load(movie.getCardImageUrl())
+//                .centerCrop()
+//                .error(mDefaultCardImage)
+//                .into(cardView.getMainImageView());
     }
 
     @Override

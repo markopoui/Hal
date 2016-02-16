@@ -54,8 +54,17 @@ import com.example.cassi.hal.R;
 import com.example.cassi.hal.activity.BrowseErrorActivity;
 import com.example.cassi.hal.adapter.CardPresenter;
 import com.example.cassi.hal.activity.DetailsActivity;
+import com.example.cassi.hal.enums.Category;
+import com.example.cassi.hal.model.KickassResult;
 import com.example.cassi.hal.model.Movie;
+import com.example.cassi.hal.model.TorrentItem;
+import com.example.cassi.hal.retrofit.RetrofitManager;
 import com.example.cassi.hal.utils.MovieList;
+
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 public class MainFragment extends BrowseFragment {
     private static final String TAG = "MainFragment";
@@ -79,11 +88,11 @@ public class MainFragment extends BrowseFragment {
         Log.i(TAG, "onCreate");
         super.onActivityCreated(savedInstanceState);
 
+        getTorrents();
+
         prepareBackgroundManager();
 
         setupUIElements();
-
-        loadRows();
 
         setupEventListeners();
     }
@@ -97,23 +106,38 @@ public class MainFragment extends BrowseFragment {
         }
     }
 
-    private void loadRows() {
-        List<Movie> list = MovieList.setupMovies();
+    private void getTorrents(){
+        try {
+            Call<KickassResult> call = RetrofitManager.getInstance().getRetrofitService("https://kat.cr/").getTestResult("matrix");
+            call.enqueue(new Callback<KickassResult>() {
+                @Override
+                public void onResponse(Response<KickassResult> response, Retrofit retrofit) {
+                    loadRows(response.body());
+                }
 
+                @Override
+                public void onFailure(Throwable t) {
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadRows(KickassResult kickassResult) {
         mRowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
         CardPresenter cardPresenter = new CardPresenter();
 
-        int i;
-        for (i = 0; i < NUM_ROWS; i++) {
-            if (i != 0) {
-                Collections.shuffle(list);
-            }
+        int i = 0;
+        for(Category cat : Category.values()){
             ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(cardPresenter);
-            for (int j = 0; j < NUM_COLS; j++) {
-                listRowAdapter.add(list.get(j % 5));
+            for(TorrentItem items : kickassResult.getCategory(cat)){
+                listRowAdapter.add(items);
             }
-            HeaderItem header = new HeaderItem(i, MovieList.MOVIE_CATEGORY[i]);
+            HeaderItem header = new HeaderItem(i, cat.name());
             mRowsAdapter.add(new ListRow(header, listRowAdapter));
+            i++;
         }
 
         HeaderItem gridHeader = new HeaderItem(i, "PREFERENCES");
@@ -126,7 +150,6 @@ public class MainFragment extends BrowseFragment {
         mRowsAdapter.add(new ListRow(gridHeader, gridRowAdapter));
 
         setAdapter(mRowsAdapter);
-
     }
 
     private void prepareBackgroundManager() {
