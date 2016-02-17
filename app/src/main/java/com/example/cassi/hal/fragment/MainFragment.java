@@ -15,8 +15,6 @@
 package com.example.cassi.hal.fragment;
 
 import java.net.URI;
-import java.util.Collections;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -57,9 +55,8 @@ import com.example.cassi.hal.activity.DetailsActivity;
 import com.example.cassi.hal.enums.Category;
 import com.example.cassi.hal.model.KickassResult;
 import com.example.cassi.hal.model.Movie;
-import com.example.cassi.hal.model.TorrentItem;
+import com.example.cassi.hal.model.KickassTorrentItem;
 import com.example.cassi.hal.retrofit.RetrofitManager;
-import com.example.cassi.hal.utils.MovieList;
 
 import retrofit.Call;
 import retrofit.Callback;
@@ -132,7 +129,7 @@ public class MainFragment extends BrowseFragment {
         int i = 0;
         for(Category cat : Category.values()){
             ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(cardPresenter);
-            for(TorrentItem items : kickassResult.getCategory(cat)){
+            for(KickassTorrentItem items : kickassResult.getCategory(cat)){
                 listRowAdapter.add(items);
             }
             HeaderItem header = new HeaderItem(i, cat.name());

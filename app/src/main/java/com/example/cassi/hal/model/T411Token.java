@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by cassi on 16-02-16.
  */
-public class T411Result implements Serializable {
+public class T411Token implements Serializable {
     String token;
     String error;
 }

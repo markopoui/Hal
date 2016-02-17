@@ -20,10 +20,8 @@ import android.support.v17.leanback.widget.Presenter;
 import android.util.Log;
 import android.view.ViewGroup;
 
-import com.bumptech.glide.Glide;
 import com.example.cassi.hal.R;
-import com.example.cassi.hal.model.Movie;
-import com.example.cassi.hal.model.TorrentItem;
+import com.example.cassi.hal.model.KickassTorrentItem;
 
 /*
  * A CardPresenter is used to generate Views and bind Objects to them on demand. 
@@ -70,7 +68,7 @@ public class CardPresenter extends Presenter {
 
     @Override
     public void onBindViewHolder(Presenter.ViewHolder viewHolder, Object item) {
-        TorrentItem torrentItem = (TorrentItem) item;
+        KickassTorrentItem torrentItem = (KickassTorrentItem) item;
         ImageCardView cardView = (ImageCardView) viewHolder.view;
 
         Log.d(TAG, "onBindViewHolder");

@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 /**
  * Created by cassi on 14-02-16.
  */
-public class TorrentItem implements Serializable {
+public class KickassTorrentItem implements Serializable {
     private String title;
     private String category;
     private String link;

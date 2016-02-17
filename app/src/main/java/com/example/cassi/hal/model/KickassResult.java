@@ -1,7 +1,6 @@
 package com.example.cassi.hal.model;
 
 import com.example.cassi.hal.enums.Category;
-import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,7 +15,7 @@ public class KickassResult implements Serializable {
     private String language;
     private int ttl;
     private String totalResults;
-    private List<TorrentItem> list;
+    private List<KickassTorrentItem> list;
 
     public String getTitle() {
         return title;
@@ -58,17 +57,17 @@ public class KickassResult implements Serializable {
         this.totalResults = totalResults;
     }
 
-    public List<TorrentItem> getList() {
+    public List<KickassTorrentItem> getList() {
         return list;
     }
 
-    public void setList(List<TorrentItem> list) {
+    public void setList(List<KickassTorrentItem> list) {
         this.list = list;
     }
 
-    public List<TorrentItem> getCategory(Category cat){
-        List<TorrentItem> result = new ArrayList<>();
-        for (TorrentItem torrentItem : list){
+    public List<KickassTorrentItem> getCategory(Category cat){
+        List<KickassTorrentItem> result = new ArrayList<>();
+        for (KickassTorrentItem torrentItem : list){
             if(torrentItem.getCategory().equals(cat.getCategory())){
                 result.add(torrentItem);
             }
