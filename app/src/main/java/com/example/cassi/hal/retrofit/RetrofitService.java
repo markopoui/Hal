@@ -5,6 +5,7 @@ import com.example.cassi.hal.model.MyApiFilmResult;
 import com.example.cassi.hal.model.T411Token;
 import com.example.cassi.hal.model.KickassTorrentItem;
 import com.example.cassi.hal.model.T411TorrentItem;
+import com.example.cassi.hal.model.TmdbResult;
 
 import java.util.List;
 
@@ -31,4 +32,10 @@ public interface RetrofitService {
 
     @GET("imdb/idIMDB")
     Call<MyApiFilmResult> getFilmByTitle(@Query("language") String language, @Query("title") String title, @Query("token") String token) throws Exception;
+
+    @GET("3/search/movie")
+    Call<TmdbResult> getTMDBMovieByTitle(@Query("query") String title, @Query("language") String language, @Query("api_key") String apiKey);
+
+    @GET("3/search/tv")
+    Call<TmdbResult> getTMDBSerieByTitle(@Query("query") String title, @Query("language") String language, @Query("api_key") String apiKey);
 }

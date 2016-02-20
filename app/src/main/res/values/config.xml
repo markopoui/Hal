@@ -4,4 +4,7 @@
     <string name="my_t411_token">99591834:44:3d872d582fe2eeb49c0f13edf1141c15</string>
     <string name="myapifilms_base_url">http://www.myapifilms.com</string>
     <string name="myapifilms_token">3ee35cd3-2fe8-4a6b-9ccb-feca730b5795</string>
+    <string name="themoviedb_api_base_url">https://api.themoviedb.org</string>
+    <string name="themoviedb_key">52f01d7a4b07a4a0af3c95efa94a1c03</string>
+    <string name="themoviedb_poster_url">https://image.tmdb.org/t/p/original</string>
 </resources>

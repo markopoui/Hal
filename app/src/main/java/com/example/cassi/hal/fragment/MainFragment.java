@@ -20,6 +20,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -59,6 +60,8 @@ import com.example.cassi.hal.model.Movie;
 import com.example.cassi.hal.model.KickassTorrentItem;
 import com.example.cassi.hal.model.T411TorrentItem;
 import com.example.cassi.hal.retrofit.RetrofitManager;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import retrofit.Call;
 import retrofit.Callback;
@@ -196,8 +199,9 @@ public class MainFragment extends BrowseFragment {
         int height = mMetrics.heightPixels;
         Glide.with(getActivity())
                 .load(uri)
-                .centerCrop()
+                .override(width/4, height/4)
                 .error(mDefaultBackground)
+                .placeholder(mDefaultBackground)
                 .into(new SimpleTarget<GlideDrawable>(width, height) {
                     @Override
                     public void onResourceReady(GlideDrawable resource,
@@ -249,18 +253,9 @@ public class MainFragment extends BrowseFragment {
         @Override
         public void onItemSelected(Presenter.ViewHolder itemViewHolder, Object item,
                                    RowPresenter.ViewHolder rowViewHolder, Row row) {
-            if (item instanceof Movie) {
-                mBackgroundURI = ((Movie) item).getBackgroundImageURI();
-                startBackgroundTimer();
-            }
             if(item instanceof T411TorrentItem) {
-                if(((T411TorrentItem) item).getBackgroundUrl() != null) {
-                    mBackgroundURI = URI.create(((T411TorrentItem) item).getBackgroundUrl());
-                    startBackgroundTimer();
-                }else {
-                    mBackgroundURI = null;
-                    startBackgroundTimer();
-                }
+                mBackgroundURI = URI.create(getActivity().getApplicationContext().getString(R.string.themoviedb_poster_url) + ((T411TorrentItem) item).getBackgroundUrl());
+                startBackgroundTimer();
                 setTitle(((T411TorrentItem) item).getName());
             }
 

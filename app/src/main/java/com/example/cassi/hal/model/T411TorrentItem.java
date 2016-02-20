@@ -33,6 +33,7 @@ public class T411TorrentItem implements Serializable {
     private String username;
     private String privacy;
     private int isVerified;
+    private String posterUrl;
     private String backgroundUrl;
 
     public int getCategoryPlaceHolder() {
@@ -67,6 +68,14 @@ public class T411TorrentItem implements Serializable {
 
     public void setBackgroundUrl(String backgroundUrl) {
         this.backgroundUrl = backgroundUrl;
+    }
+
+    public String getPosterUrl() {
+        return posterUrl;
+    }
+
+    public void setPosterUrl(String posterUrl) {
+        this.posterUrl = posterUrl;
     }
 
     public int getId() {

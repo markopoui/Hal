@@ -15,7 +15,6 @@
 package com.example.cassi.hal.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v17.leanback.widget.ImageCardView;
 import android.support.v17.leanback.widget.Presenter;
@@ -27,13 +26,13 @@ import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.bumptech.glide.Glide;
 import com.example.cassi.hal.R;
 import com.example.cassi.hal.enums.Category;
-import com.example.cassi.hal.model.MyApiFilmResult;
 import com.example.cassi.hal.model.T411TorrentItem;
+import com.example.cassi.hal.model.TmdbResult;
 import com.example.cassi.hal.retrofit.RetrofitManager;
 import com.example.cassi.hal.utils.RegexUtils;
-import com.squareup.picasso.Picasso;
 
 import retrofit.Call;
 import retrofit.Callback;
@@ -100,14 +99,16 @@ public class CardPresenter extends Presenter {
         cardView.setLayoutParams(new FrameLayout.LayoutParams(CARD_WIDTH, FrameLayout.LayoutParams.WRAP_CONTENT));
         cardView.getMainImageView().setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.poster_placeholder));
         if(torrentItem.getBackgroundUrl() != null) {
-            Picasso.with(mContext)
-                    .load(torrentItem.getBackgroundUrl())
+            Glide.with(mContext)
+                    .load(mContext.getString(R.string.themoviedb_poster_url) + torrentItem.getPosterUrl())
                     .error(ContextCompat.getDrawable(mContext, R.drawable.poster_placeholder))
                     .placeholder(ContextCompat.getDrawable(mContext, R.drawable.poster_placeholder))
                     .into(cardView.getMainImageView());
         }else {
-            if(torrentItem.getCategoryName().equals(Category.MOVIE.getT411CatName()))
-            getItemPicture(cardView, torrentItem);
+            if(torrentItem.getCategoryName().equals(Category.MOVIE.getT411CatName()) || torrentItem.getCategoryName().equals(Category.ANIME.getT411CatName()))
+                getMovieTMDBdetail(cardView, torrentItem, Category.MOVIE);
+            if(torrentItem.getCategoryName().equals(Category.TV.getT411CatName()))
+                getMovieTMDBdetail(cardView, torrentItem, Category.TV);
         }
     }
 
@@ -121,21 +122,27 @@ public class CardPresenter extends Presenter {
         return spannable;
     }
 
-    private void getItemPicture(final ImageCardView cardView, final T411TorrentItem item) {
+    private void getMovieTMDBdetail(final ImageCardView cardView, final T411TorrentItem item, Category category) {
         try {
-            Call<MyApiFilmResult> call = RetrofitManager.getInstance()
-                    .getRetrofitService(mContext.getString(R.string.myapifilms_base_url))
-                    .getFilmByTitle("fr-be", RegexUtils.getCleanedTorrentName(item.getName()), mContext.getString(R.string.myapifilms_token));
-            call.enqueue(new Callback<MyApiFilmResult>() {
+            TmdbResult result = null;
+            Call<TmdbResult> call = null;
+            if(category == Category.MOVIE) {
+                call = RetrofitManager.getInstance().getRetrofitService(mContext.getString(R.string.themoviedb_api_base_url)).getTMDBMovieByTitle(RegexUtils.getCleanedTorrentName(item.getName()), "fr", mContext.getString(R.string.themoviedb_key));
+            }else if(category == Category.TV){
+                call = RetrofitManager.getInstance().getRetrofitService(mContext.getString(R.string.themoviedb_api_base_url)).getTMDBSerieByTitle(RegexUtils.getCleanedTorrentName(item.getName()), "fr", mContext.getString(R.string.themoviedb_key));
+            }
+            assert call != null;
+            call.enqueue(new Callback<TmdbResult>() {
                 @Override
-                public void onResponse(Response<MyApiFilmResult> response, Retrofit retrofit) {
-                    if(response.body().getData() != null && response.body().getData().getMovies().size() > 0 && cardView.getTitleText().equals(item.getName())) {
-                        Picasso.with(mContext)
-                                .load(response.body().getData().getMovies().get(0).getUrlPoster())
+                public void onResponse(Response<TmdbResult> response, Retrofit retrofit) {
+                    if(response.body().getResults() != null && response.body().getResults().size() > 0 && cardView.getTitleText().equals(item.getName())) {
+                        Glide.with(mContext)
+                                .load(mContext.getString(R.string.themoviedb_poster_url) + response.body().getResults().get(0).getPosterPath())
                                 .error(ContextCompat.getDrawable(mContext, R.drawable.poster_placeholder))
                                 .placeholder(ContextCompat.getDrawable(mContext, R.drawable.poster_placeholder))
                                 .into(cardView.getMainImageView());
-                        item.setBackgroundUrl(response.body().getData().getMovies().get(0).getUrlPoster());
+                        item.setBackgroundUrl(response.body().getResults().get(0).getBackdropPath());
+                        item.setPosterUrl(response.body().getResults().get(0).getPosterPath());
                     }
                 }
 
