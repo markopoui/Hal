@@ -15,6 +15,7 @@
 package com.example.cassi.hal.fragment;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -56,6 +57,7 @@ import com.example.cassi.hal.enums.Category;
 import com.example.cassi.hal.model.KickassResult;
 import com.example.cassi.hal.model.Movie;
 import com.example.cassi.hal.model.KickassTorrentItem;
+import com.example.cassi.hal.model.T411TorrentItem;
 import com.example.cassi.hal.retrofit.RetrofitManager;
 
 import retrofit.Call;
@@ -105,10 +107,11 @@ public class MainFragment extends BrowseFragment {
 
     private void getTorrents(){
         try {
-            Call<KickassResult> call = RetrofitManager.getInstance().getRetrofitService("https://kat.cr/").getTestResult("matrix");
-            call.enqueue(new Callback<KickassResult>() {
+            String token = "99591834:47:a36fbc5c03353bf5441e8fc1c2777bee";
+            Call<List<T411TorrentItem>> call = RetrofitManager.getInstance().getRetrofitService(getString(R.string.t411_api_base_url)).getT411Top100(token);
+            call.enqueue(new Callback<List<T411TorrentItem>>() {
                 @Override
-                public void onResponse(Response<KickassResult> response, Retrofit retrofit) {
+                public void onResponse(Response<List<T411TorrentItem>> response, Retrofit retrofit) {
                     loadRows(response.body());
                 }
 
@@ -122,15 +125,17 @@ public class MainFragment extends BrowseFragment {
         }
     }
 
-    private void loadRows(KickassResult kickassResult) {
+    private void loadRows(List<T411TorrentItem> t411TorrentItems) {
         mRowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
-        CardPresenter cardPresenter = new CardPresenter();
+        CardPresenter cardPresenter = new CardPresenter(getActivity().getApplicationContext());
 
         int i = 0;
         for(Category cat : Category.values()){
             ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(cardPresenter);
-            for(KickassTorrentItem items : kickassResult.getCategory(cat)){
-                listRowAdapter.add(items);
+            for(T411TorrentItem item : t411TorrentItems){
+                if(cat.getT411CatName().equals(item.getCategoryName())) {
+                    listRowAdapter.add(item);
+                }
             }
             HeaderItem header = new HeaderItem(i, cat.name());
             mRowsAdapter.add(new ListRow(header, listRowAdapter));
@@ -247,6 +252,16 @@ public class MainFragment extends BrowseFragment {
             if (item instanceof Movie) {
                 mBackgroundURI = ((Movie) item).getBackgroundImageURI();
                 startBackgroundTimer();
+            }
+            if(item instanceof T411TorrentItem) {
+                if(((T411TorrentItem) item).getBackgroundUrl() != null) {
+                    mBackgroundURI = URI.create(((T411TorrentItem) item).getBackgroundUrl());
+                    startBackgroundTimer();
+                }else {
+                    mBackgroundURI = null;
+                    startBackgroundTimer();
+                }
+                setTitle(((T411TorrentItem) item).getName());
             }
 
         }

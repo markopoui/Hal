@@ -16,6 +16,8 @@ package com.example.cassi.hal.model;
 
 import android.util.Log;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -35,8 +37,18 @@ public class Movie implements Serializable {
     private String videoUrl;
     private String studio;
     private String category;
+    @SerializedName("urlPoster")
+    private String urlPoster;
 
     public Movie() {
+    }
+
+    public String getUrlPoster() {
+        return urlPoster;
+    }
+
+    public void setUrlPoster(String urlPoster) {
+        this.urlPoster = urlPoster;
     }
 
     public static long getCount() {
@@ -129,15 +141,15 @@ public class Movie implements Serializable {
         }
     }
 
-    @Override
-    public String toString() {
-        return "Movie{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", videoUrl='" + videoUrl + '\'' +
-                ", backgroundImageUrl='" + bgImageUrl + '\'' +
-                ", backgroundImageURI='" + getBackgroundImageURI().toString() + '\'' +
-                ", cardImageUrl='" + cardImageUrl + '\'' +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Movie{" +
+//                "id=" + id +
+//                ", title='" + title + '\'' +
+//                ", videoUrl='" + videoUrl + '\'' +
+//                ", backgroundImageUrl='" + bgImageUrl + '\'' +
+//                ", backgroundImageURI='" + getBackgroundImageURI().toString() + '\'' +
+//                ", cardImageUrl='" + cardImageUrl + '\'' +
+//                '}';
+//    }
 }

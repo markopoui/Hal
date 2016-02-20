@@ -4,11 +4,14 @@ import android.test.AndroidTestCase;
 import android.util.Log;
 
 import com.example.cassi.hal.model.KickassResult;
+import com.example.cassi.hal.model.MyApiFilmResult;
 import com.example.cassi.hal.model.T411Token;
 import com.example.cassi.hal.model.KickassTorrentItem;
 import com.example.cassi.hal.model.T411TorrentItem;
 import com.example.cassi.hal.retrofit.RetrofitManager;
+import com.example.cassi.hal.utils.RegexUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.Call;
@@ -38,6 +41,7 @@ public class TorrentParsingTestCase extends AndroidTestCase {
     }
 
     public void testGetT411Top100() {
+        List<String> names = new ArrayList<>();
         List<T411TorrentItem> result = null;
         String token = "99591834:47:a36fbc5c03353bf5441e8fc1c2777bee";
 
@@ -50,6 +54,12 @@ public class TorrentParsingTestCase extends AndroidTestCase {
         }
 
         assertNotNull(result);
+
+        for(T411TorrentItem item : result){
+            names.add(RegexUtils.getCleanedTorrentName(item.getName()));
+        }
+
+        assertNotNull(names);
     }
 
     public void testGetKickassResult() {
@@ -77,6 +87,19 @@ public class TorrentParsingTestCase extends AndroidTestCase {
             Log.e(TAG, e.getMessage());
         }
 
+        assertNotNull(result);
+    }
+
+    public void testImdbMovie() {
+        MyApiFilmResult result = null;
+        String token = "3ee35cd3-2fe8-4a6b-9ccb-feca730b5795";
+        try {
+            Call<MyApiFilmResult> call = RetrofitManager.getInstance().getRetrofitService("http://www.myapifilms.com").getFilmByTitle("fr-be", "Le seigneur des anneaux", token);
+            result = call.execute().body();
+
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+        }
         assertNotNull(result);
     }
 }

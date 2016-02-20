@@ -200,7 +200,7 @@ public class VideoDetailsFragment extends DetailsFragment {
         List<Movie> list = MovieList.list;
 
         Collections.shuffle(list);
-        ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(new CardPresenter());
+        ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(new CardPresenter(getActivity().getApplicationContext()));
         for (int j = 0; j < NUM_COLS; j++) {
             listRowAdapter.add(list.get(j % 5));
         }

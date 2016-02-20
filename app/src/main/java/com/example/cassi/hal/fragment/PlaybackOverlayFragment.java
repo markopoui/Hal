@@ -109,7 +109,7 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Pl
 
         List<Movie> movies = MovieList.list;
 
-        ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(new CardPresenter());
+        ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(new CardPresenter(getContext()));
 
         for (int j = 0; j < movies.size(); j++) {
             mItems.add(movies.get(j));
@@ -308,7 +308,7 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Pl
     }
 
     private void addOtherRows() {
-        ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(new CardPresenter());
+        ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(new CardPresenter(getContext()));
         for (Movie movie : mItems) {
             listRowAdapter.add(movie);
         }

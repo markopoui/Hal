@@ -1,5 +1,6 @@
 package com.example.cassi.hal.model;
 
+import com.example.cassi.hal.enums.Category;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -32,6 +33,41 @@ public class T411TorrentItem implements Serializable {
     private String username;
     private String privacy;
     private int isVerified;
+    private String backgroundUrl;
+
+    public int getCategoryPlaceHolder() {
+        for(Category cat :  Category.values()){
+            if(getCategoryName().equals(cat.getT411CatName())){
+                switch (cat){
+                    case MOVIE:
+                        break;
+                    case TV:
+                        break;
+                    case GAME:
+                        break;
+                    case BOOK:
+                        break;
+                    case MUSIC:
+                        break;
+                    case ANIME:
+                        break;
+                    case APPS:
+                        break;
+                    case XXX:
+                        break;
+                }
+            }
+        }
+        return 0;
+    }
+
+    public String getBackgroundUrl() {
+        return backgroundUrl;
+    }
+
+    public void setBackgroundUrl(String backgroundUrl) {
+        this.backgroundUrl = backgroundUrl;
+    }
 
     public int getId() {
         return id;
