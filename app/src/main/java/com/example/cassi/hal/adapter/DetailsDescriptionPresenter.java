@@ -17,17 +17,18 @@ package com.example.cassi.hal.adapter;
 import android.support.v17.leanback.widget.AbstractDetailsDescriptionPresenter;
 
 import com.example.cassi.hal.model.Movie;
+import com.example.cassi.hal.model.T411TorrentItem;
 
 public class DetailsDescriptionPresenter extends AbstractDetailsDescriptionPresenter {
 
     @Override
     protected void onBindDescription(ViewHolder viewHolder, Object item) {
-        Movie movie = (Movie) item;
+        T411TorrentItem torrentItem = (T411TorrentItem) item;
 
-        if (movie != null) {
-            viewHolder.getTitle().setText(movie.getTitle());
-            viewHolder.getSubtitle().setText(movie.getStudio());
-            viewHolder.getBody().setText(movie.getDescription());
+        if (torrentItem != null) {
+            viewHolder.getTitle().setText(torrentItem.getName());
+            viewHolder.getSubtitle().setText(torrentItem.getCategoryName());
+            viewHolder.getBody().setText(torrentItem.getUsername());
         }
     }
 }

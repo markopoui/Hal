@@ -25,6 +25,7 @@ import com.example.cassi.hal.R;
 public class DetailsActivity extends Activity {
     public static final String SHARED_ELEMENT_NAME = "hero";
     public static final String MOVIE = "Movie";
+    public static final String T411 = "T411item";
 
     /**
      * Called when the activity is first created.
